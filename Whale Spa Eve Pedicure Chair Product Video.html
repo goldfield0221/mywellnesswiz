@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lazy Load YouTube Video</title>
+  <style>
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    .video-wrapper img.thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .video-wrapper:hover img.thumbnail {
+      transform: scale(1.03);
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+      pointer-events: none;
+    }
+
+    .video-wrapper:hover .play-button {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: #fff;
+    }
+
+    .play-button svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 4px;
+      fill: #cc0000;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="video-wrapper" id="videoWrapper" onclick="loadVideo()">
+    <!-- Thumbnail from YouTube -->
+    <img
+      class="thumbnail"
+      src="https://img.youtube.com/vi/nSzFFyL9tJU/maxresdefault.jpg"
+      alt="Play video"
+      loading="lazy"
+    />
+    <!-- Play Button -->
+    <div class="play-button">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    function loadVideo() {
+      const wrapper = document.getElementById('videoWrapper');
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/nSzFFyL9tJU?autoplay=1&rel=0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      wrapper.innerHTML = '';
+      wrapper.appendChild(iframe);
+    }
+  </script>
+
+</body>
+</html>
